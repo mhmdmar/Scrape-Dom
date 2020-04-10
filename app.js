@@ -1,11 +1,7 @@
-// npm packages
-const express = require('express');
+const express = require("express");
 const app = express();
-const genericRoute = require('./api/routes/generic');
-const dynamicRoute = require('./api/routes/dynamic');
+const router = require("./api/routes/router");
 
-// Product API
-app.use('/scrape', express.json(), genericRoute);
-app.use('/dynamic', express.json(), dynamicRoute);
+app.use(express.json(), router);
 
 module.exports = app;

@@ -1,24 +1,37 @@
 {
-  "name": "site-scrape",
-  "version": "1.0.0",
-  "description": "scrape a website puppeteer",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "node",
-    "restfull",
-    "api"
-  ],
-  "author": "Muhammad Haj Yahya",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "cheerio": "^1.0.0-rc.2",
-    "express": "^4.16.3",
-    "puppeteer": "^1.9.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2"
-  }
+    "name": "site-scrape",
+    "version": "1.0.0",
+    "description": "scrape a website puppeteer",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "node",
+        "restfull",
+        "api",
+        "scrape",
+        "DOM"
+    ],
+    "author": "Muhammad Haj Yahya",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "cheerio": "^1.0.0-rc.2",
+        "express": "^4.16.3",
+        "puppeteer": "^2.1.1",
+        "request": "^2.88.0",
+        "request-promise": "^4.2.2"
+    },
+    "prettier": {
+        "printWidth": 90,
+        "trailingComma": "none",
+        "tabWidth": 4,
+        "semi": true,
+        "singleQuote": false,
+        "bracketSpacing": false,
+        "arrowParens": "avoid",
+        "vueIndentScriptAndStyle": true,
+        "endOfLine": "lf"
+    }
 }
