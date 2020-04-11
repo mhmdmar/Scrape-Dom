@@ -47,7 +47,6 @@ async function scraper(page, scrape, result, listChild, index) {
                     scrape[item].list,
                     false
                 );
-                console.dir(element.length);
                 for (let b in element) {
                     result[scrape[item].name][b] = {};
                     result[scrape[item].name][b] = await scraper(

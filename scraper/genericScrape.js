@@ -21,37 +21,50 @@ function scrapeElement(element, type) {
     }
     return data || null;
 }
+function forEachElement($, selector, callback) {
+    $(selector).each((i, element) => {
+        callback(i, element);
+    });
+}
+function forEachChild(element, callback) {
+    if (!element.children || element.children.length === 0) {
+        return;
+    }
+    for (let i = 0; i < element.children.length; i++) {
+        callback(element.children[i]);
+    }
+}
 function scrapePage(scrape, $) {
     const result = {};
     function _scrapePage(tree, element, selector = "") {
-        selector += " " + element.selector;
         if (!element.name) {
             return;
         }
+        selector += " " + element.selector;
         if (element.children) {
             if (element.list) {
                 tree[element.name] = [];
-                $(selector).each(nth => {
+                forEachElement($, selector, i => {
                     const item = {};
-                    for (let i = 0; i < element.children.length; i++) {
+                    forEachChild(element, child => {
                         _scrapePage(
                             item,
-                            element.children[i],
-                            selector + `:nth-of-type(${nth + 1})`
+                            child,
+                            selector + `:nth-of-type(${i + 1})` /* nth starts from 1*/
                         );
-                    }
-                    tree[element.name].push(item);
+                        tree[element.name].push(item);
+                    });
                 });
             } else {
                 tree[element.name] = {};
-                for (let i = 0; i < element.children.length; i++) {
-                    _scrapePage(tree[element.name], element.children[i], selector);
-                }
+                forEachChild(element, child => {
+                    _scrapePage(tree[element.name], child, selector);
+                });
             }
         } else {
             if (element.list) {
                 tree[element.name] = [];
-                $(selector).each((i, el) => {
+                forEachElement($, selector, (i, el) => {
                     tree[element.name].push(scrapeElement(el, element.type));
                 });
             } else {
@@ -65,7 +78,7 @@ function scrapePage(scrape, $) {
     }
     return result;
 }
-async function Scrape(json) {
+async function dynamicScrape(json) {
     let result = {};
     let startTime = Date.now();
     if (!json["scrape"]) {
@@ -74,8 +87,8 @@ async function Scrape(json) {
     }
 
     const options = {
-        "uri": json.url,
-        "transform": function(body) {
+        uri: json.url,
+        transform: function(body) {
             return cheerio.load(body);
         }
     };
@@ -94,4 +107,4 @@ async function Scrape(json) {
     return result;
 }
 
-module.exports = Scrape;
+module.exports = dynamicScrape;
